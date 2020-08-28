@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../main.dart';
-import 'Note.dart';
+import 'NotesPage.dart';
 
 class AddNote extends StatefulWidget {
   @override
@@ -9,7 +8,6 @@ class AddNote extends StatefulWidget {
 }
 
 class _AddNoteState extends State<AddNote> {
-  var listNote = new List();
   String title, description;
   @override
   Widget build(BuildContext context) {
@@ -32,9 +30,14 @@ class _AddNoteState extends State<AddNote> {
                 padding: const EdgeInsets.only(right: 10.0),
                 child: FlatButton(
                   onPressed: () {
-                    Note n1 = Note(title: title, description: description);
-                    listNote.add(n1);
-                    Navigator.pop(context, listNote);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => NotesPage(
+                            title,
+                            description,
+                          ),
+                        ));
                   },
                   child: Text('Save',
                       style: TextStyle(fontSize: 20, color: Colors.white)),
@@ -53,14 +56,9 @@ class _AddNoteState extends State<AddNote> {
                     });
                   },
                   decoration: InputDecoration(
-                    labelText: 'Title',
-                    labelStyle: TextStyle(color: Colors.white),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                    ),
+                    border: InputBorder.none,
+                    hintText: 'Title',
+                    hintStyle: TextStyle(color: Colors.white54),
                   ),
                   style: TextStyle(fontSize: 20, color: Colors.white)),
             ),
@@ -75,14 +73,9 @@ class _AddNoteState extends State<AddNote> {
                   });
                 },
                 decoration: InputDecoration(
-                  labelText: 'Description',
-                  labelStyle: TextStyle(color: Colors.white),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
+                  hintText: 'Description',
+                  hintStyle: TextStyle(color: Colors.white54),
+                  border: InputBorder.none,
                 ),
                 style: TextStyle(fontSize: 20, color: Colors.white)),
           ),

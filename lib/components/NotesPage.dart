@@ -1,29 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/components/AddNote.dart';
-import 'components/Note.dart';
 
-void main() {
-  runApp(MyApp());
-}
+import 'Note.dart';
+import 'SecondScreen.dart';
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: MyHomePage(),
-      theme: ThemeData(fontFamily: 'Exo'),
-    );
+var list = [];
+
+class NotesPage extends StatefulWidget {
+  NotesPage(String t, String d) {
+    Note n1 = Note(title: t, description: d);
+    list.add(n1);
   }
+
+  _NotesPageState createState() => _NotesPageState();
 }
 
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  var list = [];
+class _NotesPageState extends State<NotesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,11 +39,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   FlatButton(
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => AddNote(),
-                          ));
+                      Navigator.pop(
+                        context,
+                      );
                     },
                     child: Icon(
                       Icons.add_box,
@@ -63,20 +52,28 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
               SizedBox(
-                height: 50,
+                height: 15,
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 100.0),
-                child: Center(
-                  child: Text(
-                    "What would you do\nif you were'nt afraid?",
-                    style: TextStyle(
-                        color: Colors.white54,
-                        fontStyle: FontStyle.italic,
-                        fontSize: 20),
-                  ),
-                ),
-              )
+              Container(
+                height: 700,
+                child: ListView.builder(
+                    itemCount: list.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      Note n1 = list[index];
+                      return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SecondScreen(
+                                    title: n1.title,
+                                    description: n1.description,
+                                  ),
+                                ));
+                          },
+                          child: showNote(n1));
+                    }),
+              ),
             ],
           ),
         ));
@@ -84,8 +81,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget showNote(Note n1) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       child: Container(
+        height: 100,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           color: Colors.amber[200],
@@ -99,7 +97,10 @@ class _MyHomePageState extends State<MyHomePage> {
             padding: const EdgeInsets.only(top: 8.0),
             child: Text(
               n1.description,
-              style: TextStyle(fontSize: 20, color: Colors.black),
+              style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.black,
+                  fontStyle: FontStyle.italic),
             ),
           ),
         ),
