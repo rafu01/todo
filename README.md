@@ -3,4 +3,5 @@
 A Flutter Note app
 
 ## Getting Started
-<img src="/images/1.png width=100>
+
+<img src="images/1.png width=100px>
